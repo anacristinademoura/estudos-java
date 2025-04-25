@@ -1,4 +1,6 @@
-<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/330px-Java_Logo.svg.png?20061227215918" alt="Java Icon" width="120" align="center"/>
+<div align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/330px-Java_Logo.svg.png?20061227215918" alt="Java      Icon" width="120"/>
+</div>
 <h3> Repositório de Aulas - Curso de Java </h3>
 
 <p>Este repositório contém todas as aulas e materiais do curso de Java. 
