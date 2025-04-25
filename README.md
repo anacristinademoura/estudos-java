@@ -1,11 +1,11 @@
-<img src="https://www.clipartmax.com/png/middle/338-3384612_brightmarbles-bright-expertise-javapng-java-icon.png" alt="Java Icon" height="150" width="200"/>
-# <h3> Repositório de Aulas - Curso de Java </h3>
+<img src="[https://www.clipartmax.com/png/middle/338-3384612_brightmarbles-bright-expertise-javapng-java-icon.png](https://images.icon-icons.com/2699/PNG/512/java_logo_icon_168609.png)" alt="Java Icon" height="150" width="200"/>
+## <h3> Repositório de Aulas - Curso de Java </h3>
 
 <p>Este repositório contém todas as aulas e materiais do curso de Java. 
 Ele serve como uma referência pessoal, mas está aberto para qualquer
 pessoa que queira consultar os conteúdos aprendidos.</p>
 
-## <h3> strutura do Repositório </h3>
+## <h3> Estrutura do Repositório </h3>
 
 <p>As aulas estão contidas em pastas, com cada pasta representando uma
 aula do curso. Cada uma delas contém os códigos, exercicíos resolvidos e explicações.</p>
