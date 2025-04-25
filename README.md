@@ -1,5 +1,5 @@
-<img src="[https://www.clipartmax.com/png/middle/338-3384612_brightmarbles-bright-expertise-javapng-java-icon.png](https://images.icon-icons.com/2699/PNG/512/java_logo_icon_168609.png)" alt="Java Icon" height="150" width="200"/>
-## <h3> Repositório de Aulas - Curso de Java </h3>
+<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/330px-Java_Logo.svg.png?20061227215918" alt="Java Icon" height="150" width="200"/>
+<h3> Repositório de Aulas - Curso de Java </h3>
 
 <p>Este repositório contém todas as aulas e materiais do curso de Java. 
 Ele serve como uma referência pessoal, mas está aberto para qualquer
