@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class sistemaSoma {
+public class SistemaSoma {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
