@@ -1,5 +1,6 @@
 public class Calculadora {
-
+	
+	//MÉTODOS
 	private double somar(double n1, double n2) {
 		return n1 + n2;
 	}
@@ -33,7 +34,7 @@ public class Calculadora {
 			}
 		default:
 			System.out.println("Operação inválida.");
-			return 0;
+			return 0; //EVITA ERRO
 		}
 	}
 }
