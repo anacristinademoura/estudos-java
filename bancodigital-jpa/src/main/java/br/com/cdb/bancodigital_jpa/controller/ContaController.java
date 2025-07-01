@@ -3,6 +3,7 @@ package br.com.cdb.bancodigital_jpa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,5 +66,61 @@ public class ContaController {
 		}
 		//Envia 200 OK se der certo
 		//Envia 400 e uma mensagem se der errado
+	}
+	
+	@GetMapping("/saldo")
+	public ResponseEntity<String> consultarSaldo(@RequestParam Long idConta){
+		try {
+			Double saldo = contaService.getSaldo(idConta);
+			return ResponseEntity.ok("Saldo: " + saldo);
+		}
+		catch(IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+		}
+		catch(RuntimeException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
+		}
+	}
+	
+	@PostMapping("/sacar")
+	public ResponseEntity<String> sacar(@RequestParam Long idConta, @RequestParam Double valor){
+		try {
+			contaService.saque(idConta, valor);
+			return ResponseEntity.ok("Saque realizado com sucesso!");
+		}
+		catch(IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+		}
+		catch(RuntimeException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
+		}
+	}
+	
+	@PostMapping("/transferir")
+	public ResponseEntity<String> transferir(
+			@RequestParam Long idOrigem,
+			@RequestParam Long idDestino,
+			@RequestParam Double valor)
+	{
+		try {
+			contaService.transferencia(idOrigem, idDestino,valor);
+			return ResponseEntity.ok("Tranferência realizada com sucesso!");
+		}
+		catch(IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+		}
+		catch(RuntimeException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
+		}
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deletarConta(@RequestParam Long idConta){
+		try {
+			contaService.deletar(idConta);
+			return ResponseEntity.ok("Conta deletada com sucesso.");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
+		}
 	}
 }

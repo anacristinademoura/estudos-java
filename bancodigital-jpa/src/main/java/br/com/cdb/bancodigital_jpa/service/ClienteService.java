@@ -47,7 +47,12 @@ public class ClienteService {
 	}
 	
 	public void deletarCliente(Long idCliente) {
-		Cliente cliente = getCliente(idCliente);
+		Cliente cliente = clienteRepository.findById(idCliente)
+				.orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+		
+		if(cliente.getConta() != null) {
+			throw new IllegalArgumentException("O cliente possui contas ativas. Exclua antes de apagar o cadastro.");
+		}
 		
 		clienteRepository.delete(cliente);
 	}

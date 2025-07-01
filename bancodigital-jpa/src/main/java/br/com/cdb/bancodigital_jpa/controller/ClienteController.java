@@ -52,6 +52,9 @@ public class ClienteController {
 		try {
 			clienteService.deletarCliente(idCliente);
 			return ResponseEntity.ok("Cliente deletado com sucesso.");
+		}
+		catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: " + e.getMessage());
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
 		}

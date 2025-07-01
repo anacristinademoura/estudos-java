@@ -16,6 +16,19 @@ public class ContaService {
 	private ContaRepository contaRepository;
 	@Autowired
 	private ClienteService clienteService;
+	
+	public Conta buscarClientePorId(Long idConta) {
+		Conta conta = contaRepository.findById(idConta)
+				.orElseThrow(() -> new RuntimeException("Conta não encontrada."));
+		// O lambda traz uma exceção em tempo de execução, caso não encontre a conta
+		return conta;
+	}
+	
+	public void valorNaoValido(Double valor) {
+		if (valor == null || valor < 0) {
+			throw new IllegalArgumentException("Valor negativo não é permitido.");
+		}
+	}
 
 	public void criarConta(ContaCriacaoDTO dto) {
 
@@ -39,8 +52,7 @@ public class ContaService {
 	}
 	
 	public ContaDetalhadaDTO detalhesConta(Long idConta) {
-		Conta conta = contaRepository.findById(idConta)
-				.orElseThrow(() -> new RuntimeException("Conta não encontrada."));
+		Conta conta = buscarClientePorId(idConta);
 		
 		Cliente cliente = conta.getCliente();
 		
@@ -60,15 +72,71 @@ public class ContaService {
 
 	public void depositar(Long idConta, Double valor) {
 
-		if (valor == null || valor < 0) {
-			throw new IllegalArgumentException("Valor negativo não permitido");
-		}
+		valorNaoValido(valor);
 
-		Conta conta = contaRepository.findById(idConta).orElseThrow(() -> new RuntimeException("Conta não encontrada"));
-		// O lambda traz uma exceção em tempo de execução, caso não encontre a conta
+		Conta conta = buscarClientePorId(idConta);
+		
 
 		conta.setSaldo(conta.getSaldo() + valor);
 		contaRepository.save(conta);
+	}
+	
+	public Double getSaldo(Long idConta) {
+		Conta conta = buscarClientePorId(idConta);
+		return conta.getSaldo();
+		
+	}
+
+	public void saque(Long idConta, Double valor) {
+		
+		valorNaoValido(valor);
+		
+		Conta conta = buscarClientePorId(idConta);
+		
+		if(conta.getSaldo() < valor) {
+			throw new IllegalArgumentException("Saldo insuficiente!");
+		}
+		
+		conta.setSaldo(conta.getSaldo() - valor);
+		contaRepository.save(conta);
+		
+	}
+	
+	public void transferencia(Long idOrigem, Long idDestino, Double valor) {
+		
+		valorNaoValido(valor);
+		
+		Conta origem = contaRepository.findById(idOrigem)
+				.orElseThrow(() -> new RuntimeException("Conta de origem não encontrada."));
+		
+		Conta destino = contaRepository.findById(idDestino)
+				.orElseThrow(() -> new RuntimeException("Conta de destino não encontrada."));
+		
+		if(origem.getSaldo() < valor) {
+			throw new IllegalArgumentException("Saldo insuficiente na conta de origem.");
+		}
+		
+		origem.setSaldo(origem.getSaldo() - valor);
+		destino.setSaldo(destino.getSaldo() + valor);
+		
+		contaRepository.save(origem);
+		contaRepository.save(destino);
+	}
+	
+	public void deletar(Long idConta) {
+		
+		Conta conta = contaRepository.findById(idConta)
+				.orElseThrow(() -> new RuntimeException("Conta não encontrada."));
+		
+		Cliente cliente = conta.getCliente();
+		
+		if(cliente != null) {
+			cliente.setConta(null); //desvincula a conta do Cliente
+		}
+		
+		conta.setCliente(null); //desvincula o cliente da conta
+		contaRepository.delete(conta);
+		
 	}
 
 }
