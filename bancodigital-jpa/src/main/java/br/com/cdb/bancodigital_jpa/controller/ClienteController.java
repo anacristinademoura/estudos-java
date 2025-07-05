@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cdb.bancodigital_jpa.dto.ClienteCriacaoDTO;
 import br.com.cdb.bancodigital_jpa.entity.Cliente;
 import br.com.cdb.bancodigital_jpa.service.ClienteService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cliente")
@@ -25,18 +27,14 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@PostMapping("/add")
-	public ResponseEntity<String> addCliente(@RequestBody Cliente cliente) {
+	public ResponseEntity<String> addCliente(@RequestBody @Valid ClienteCriacaoDTO dto) {
 	    try {
-	        Cliente clienteAdicionado = clienteService.salvarCliente(cliente);
+	        Cliente clienteAdicionado = clienteService.salvarCliente(dto);
 	        return new ResponseEntity<>(
-	                "Cliente " + clienteAdicionado.getNome() + " adicionado com sucesso!",
-	                HttpStatus.CREATED
+	            "Cliente " + clienteAdicionado.getNome() + " adicionado com sucesso!",
+	            HttpStatus.CREATED
 	        );
-	    } catch (IllegalArgumentException e) {
-	        // Nome ou CPF inválido
-	        return new ResponseEntity<>("Erro: " + e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 	    } catch (Exception e) {
-	        // Erro inesperado (500)
 	        return new ResponseEntity<>("Erro interno: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
@@ -73,16 +71,12 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/editar/{idCliente}")
-	public ResponseEntity<String> editarCliente(@PathVariable Long idCliente, @RequestBody Cliente novosDados){
-		try {
-			Cliente clienteAtualizado = clienteService.editarCliente(idCliente, novosDados);
-			return new ResponseEntity<>("Cliente " + clienteAtualizado.getNome() + " editado com sucesso!", HttpStatus.ACCEPTED);
-		}
-		catch(IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: " + e.getMessage());
-		}
-		catch(RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
-		}
+	public ResponseEntity<String> editarCliente(@PathVariable Long idCliente, @RequestBody @Valid ClienteCriacaoDTO novosDados){
+	    try {
+	        Cliente clienteAtualizado = clienteService.editarCliente(idCliente, novosDados);
+	        return new ResponseEntity<>("Cliente " + clienteAtualizado.getNome() + " editado com sucesso!", HttpStatus.ACCEPTED);
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
+	    }
 	}
 }

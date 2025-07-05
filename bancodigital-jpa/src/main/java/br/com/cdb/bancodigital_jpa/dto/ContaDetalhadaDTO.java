@@ -7,7 +7,8 @@ public class ContaDetalhadaDTO {
 	private String nomeCliente;
 	private String cpfCliente;
 
-	public ContaDetalhadaDTO(String numero, Double saldo, String tipo, String nomeCliente, String cpfCliente) {
+	public ContaDetalhadaDTO(String numero, Double saldo, String tipo, 
+			String nomeCliente, String cpfCliente) {
 		this.numero = numero;
 		this.saldo = saldo;
 		this.tipo = tipo;
@@ -17,43 +18,18 @@ public class ContaDetalhadaDTO {
 	
 	public ContaDetalhadaDTO() {}
 
-	public String getNumero() {
-		return numero;
-	}
+	public String getNumero() {return numero;}
+	public void setNumero(String numero) {this.numero = numero;}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+	public Double getSaldo() {return saldo;}
+	public void setSaldo(Double saldo) {this.saldo = saldo;}
 
-	public Double getSaldo() {
-		return saldo;
-	}
+	public String getTipo() {return tipo;}
+	public void setTipo(String tipo) {this.tipo = tipo;}
 
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
-	}
+	public String getNomeCliente() {return nomeCliente;}
+	public void setNomeCliente(String nomeCliente) {this.nomeCliente = nomeCliente;}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getNomeCliente() {
-		return nomeCliente;
-	}
-
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
-	}
-
-	public String getCpfCliente() {
-		return cpfCliente;
-	}
-
-	public void setCpfCliente(String cpfCliente) {
-		this.cpfCliente = cpfCliente;
-	}
+	public String getCpfCliente() {return cpfCliente;}
+	public void setCpfCliente(String cpfCliente) {this.cpfCliente = cpfCliente;}
 }

@@ -1,11 +1,19 @@
 package br.com.cdb.bancodigital_jpa.entity;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import br.com.cdb.bancodigital_jpa.enums.TipoCartao;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Cartao {
@@ -15,50 +23,61 @@ public class Cartao {
 	private Long id;
 	
 	private String numero;
-	private String validade;
-	private Double limite;
+	private String senha;
 	
-	@OneToOne
-    @JoinColumn(name = "conta_id")
-    private Conta conta;
+	@ManyToOne
+	@JoinColumn(name = "conta_id")
+	private Conta conta;
+	
+	@ManyToOne
+    @JoinColumn(name = "cliente_id") 
+	@JsonBackReference
+	private Cliente cliente;
+	
+	@Enumerated(EnumType.STRING)
+    private TipoCartao tipo;
 
-	public Long getId() {
-		return id;
-	}
+    private boolean ativo;
+    private double limite;
+    private double limiteDiario;
+    private double saldoFatura;
+    private LocalDate validade;
+    
+    @Column
+    //não se aplica a cartões de débito
+    private Double valorFatura = 0.0;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public String getNumero() {
-		return numero;
-	}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+    public Conta getConta() { return conta; }
+    public void setConta(Conta conta) { this.conta = conta; }
 
-	public String getValidade() {
-		return validade;
-	}
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
 
-	public void setValidade(String validade) {
-		this.validade = validade;
-	}
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-	public Double getLimite() {
-		return limite;
-	}
+    public TipoCartao getTipo() { return tipo; }
+    public void setTipo(TipoCartao tipo) { this.tipo = tipo; }
 
-	public void setLimite(Double limite) {
-		this.limite = limite;
-	}
+    public boolean isAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
 
-	public Conta getConta() {
-		return conta;
-	}
+    public double getLimite() { return limite; }
+    public void setLimite(double limite) { this.limite = limite; }
 
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
+    public double getLimiteDiario() { return limiteDiario; }
+    public void setLimiteDiario(double limiteDiario) { this.limiteDiario = limiteDiario; }
+
+    public double getSaldoFatura() { return saldoFatura; }
+    public void setSaldoFatura(double saldoFatura) { this.saldoFatura = saldoFatura; }
+
+    public LocalDate getValidade() { return validade; }
+    public void setValidade(LocalDate validade) { this.validade = validade; }
+    
+    public Double getValorFatura() {return valorFatura;}
+    public void setValorFatura(Double valorFatura) {this.valorFatura = valorFatura;}
 }
